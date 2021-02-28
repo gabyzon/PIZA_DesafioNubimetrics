@@ -21,21 +21,21 @@ sellers = pd.read_json(filename)
 sellers = pd.json_normalize(sellers.loc[:,"body"])
 
 # Selecciono solo la información de interés y lo grabo en un nuevo dataframe
-output = sellers.loc[:, ["id", "site_id", "nickname", "points"] ]
+sellers_info = sellers.loc[:, ["id", "site_id", "nickname", "points"] ]
 
 # Creo un nuevo dataframe para los vendedores con puntaje positivo
-positivo = output.iloc[ output.index[output['points'] > 0] , : ]
+positivo = sellers_info.iloc[ sellers_info.index[sellers_info['points'] > 0] , : ]
 
 # Creo un nuevo dataframe para los vendedores con puntaje negativo
-negativo = output.iloc[ output.index[output['points'] < 0] , : ]
+negativo = sellers_info.iloc[ sellers_info.index[sellers_info['points'] < 0] , : ]
 
 # Creo un nuevo dataframe para los vendedores con puntaje cero
-cero = output.iloc[ output.index[output['points'] == 0] , : ]
+cero = sellers_info.iloc[ sellers_info.index[sellers_info['points'] == 0] , : ]
 
 #%% Almaceno los resultados
 
 fecha = time.strftime("%m/%Y/%d")
-sitio = output.loc[0, "site_id"]
+sitio = sellers_info.loc[0, "site_id"]
 # Creo la estructura de carpetas necesaria
 
 os.makedirs( str(sitio) + "/" + str(fecha) + "/positivo")
